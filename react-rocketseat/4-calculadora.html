@@ -36,7 +36,7 @@
     }
   </style>
 
-<body className="text-(--text) font-(--font-sans)">
+<body class="text-(--text) font-(--font-sans)">
   <div id="root"></div>
 
   <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
@@ -85,7 +85,8 @@
     }) {
 
         
-        return(<Text 
+        return(
+          <Text 
             as="button" 
             variant="heading"
             className={`
@@ -100,7 +101,7 @@
             {...props}
             >
                 {children}
-            </Text>
+          </Text>
         )
     }
 
@@ -119,25 +120,102 @@
       )
     }
 
+    
+    function CalculatorDisplay({ operation, result }) {
+      return (
+        <div className={`
+              flex flex-col gap-2 px-[1.375rem]
+              cursor-default select-none
+            `}>
+          <Text
+            as="div"
+            variant="muted"
+            className="flex items-center justify-end"
+          >
+            {operation}
+          </Text>
+          <div className={`
+              flex items-center justify-between
+              `}>
+            <Text
+              variant="muted"
+            >
+              =
+            </Text>
+            <Text
+              variant="blast"
+            >
+              {result}
+            </Text>
+          </div>
+        </div>
+      )
+    }
+
+    function Calculator() {
+      return (
+        <Card className={`
+          flex flex-col gap-[1.625rem] w-[22.25rem]
+          pt-14 px-8 pb-8
+          `}>
+          <CalculatorDisplay operation="1 + 1" result="2" />
+
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-3">
+              <Button className="w-16 h-16">CE</Button>
+              <Button className="flex-1 h-16">C</Button>
+              <Button className="w-16 h-16" variant="primary">
+                /
+              </Button>
+            </div>
+            <div className="flex gap-3">
+              <Button className="w-16 h-16">7</Button>
+              <Button className="w-16 h-16">8</Button>
+              <Button className="w-16 h-16">9</Button>
+              <Button className="w-16 h-16" variant="primary">
+                *
+              </Button>
+            </div>
+            <div className="flex gap-3">
+              <Button className="w-16 h-16">4</Button>
+              <Button className="w-16 h-16">5</Button>
+              <Button className="w-16 h-16">6</Button>
+              <Button className="w-16 h-16" variant="primary">
+                -
+              </Button>
+            </div>
+            <div className="flex gap-3">
+              <Button className="w-16 h-16">1</Button>
+              <Button className="w-16 h-16">2</Button>
+              <Button className="w-16 h-16">3</Button>
+              <Button className="w-16 h-16" variant="primary">
+                +
+              </Button>
+            </div>
+            <div className="flex gap-3">
+              <Button className="flex-1 h-16">0</Button>
+              <Button className="w-16 h-16">,</Button>
+              <Button className="w-16 h-16" variant="primary">
+                =
+              </Button>
+            </div>
+          </div>
+        </Card>
+      )
+    }
+
     function App() {
       return (
         <main className="py-28 px-4">
-            <Card>
-              Testando Card  
-            </Card>
-            
-            <Button>
-              default
-            </Button>
-            
-            <Button variant="primary">
-              Primary
-            </Button>
+          
+          <Calculator />
         </main>
       )
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />)
+
+
+     ReactDOM.createRoot(document.getElementById('root')).render(<App />)
   </script>
 </body>
 
