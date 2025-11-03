@@ -164,12 +164,12 @@
           <Text
             as="div"
             variant="muted"
-            className="flex items-center justify-end"
+            className="flex items-center justify-end h-7"
           >
-            {operation}
+            {result && operation}
           </Text>
           <div className={`
-              flex items-center justify-between
+              flex items-center justify-between h-9
               `}>
             <Text
               variant="muted"
@@ -179,7 +179,7 @@
             <Text
               variant="blast"
             >
-              {result}
+              {result || operation}
             </Text>
           </div>
         </div>
@@ -187,9 +187,46 @@
     }
 
     function Calculator() {
+      const [operation, setOperation] = React.useState('');
+      const [result, setResult] = React.useState('');
 
       function handleInputClick(input) {
-        console.log(input)
+
+        if (input === "C") {
+          setOperation("");
+          setResult("");
+          return;
+        }
+
+        if (input === "CE") {
+          setResult("");
+          setOperation(operation.slice(0, -2));
+          return;
+        }
+
+        if (input === "=") {        
+          const operationResult = eval(operation.replace(/,/g, '.'));
+          const parseResult = operationResult.toString()?.replace(/\./g, ',')
+          setResult(parseResult);
+          return;
+        }
+
+        if (result) {
+          setOperation(isNaN(input)
+            ? `${result}${input === "," ? "" : " "}${input}`
+            : input)
+          setResult("");
+          return;
+        }
+
+        if (input === "," && !operation.endsWith(',')) {
+          setOperation(`${operation},`);
+          return;
+        }
+
+        setOperation(
+          `${operation}${operation.endsWith(',') ? "" : " "}${input}`
+        );
       }
 
 
@@ -198,7 +235,10 @@
           flex flex-col gap-[1.625rem] w-[22.25rem]
           pt-14 px-8 pb-8
           `}>
-          <CalculatorDisplay operation="1 + 1" result="2" />
+            <CalculatorDisplay 
+              operation={operation} 
+              result={result} 
+            />
 
           <div className="flex flex-col gap-3">
             {button.map((row, index) => (
