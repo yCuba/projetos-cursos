@@ -45,6 +45,12 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <script type="text/babel">
+
+    const buttonVariants = {
+        default: 'bg-(--background)',
+        primary: 'bg-(--primary)',
+    }
+
     const textVariants = {
       default: 'text-xl',
       muted: 'text-xl text-(--text-secondary)',
@@ -68,12 +74,6 @@
         children
       )
     }
-
-    const buttonVariants = {
-        default: 'bg-(--background)',
-        primary: 'bg-(--primary)',
-    }
-
 
     function Button({
         
@@ -154,6 +154,22 @@
 
     ]
 
+    const CalculatorContext = React.createContext();
+    function CalculatorProvider({children}) {
+      const [history, setHistory] = React.useState([]);
+
+      function updateHistory(operation, parseResult) {
+        setHistory((prev) => [...prev, `${operation}=${parseResult}`])
+      }
+
+      return (
+        <CalculatorContext.Provider
+          value={{ history, updateHistory}}
+        >
+          {children}
+        </CalculatorContext.Provider>
+      )
+    }
 
     function CalculatorDisplay({ operation, result }) {
       return (
@@ -189,6 +205,7 @@
     function Calculator() {
       const [operation, setOperation] = React.useState('');
       const [result, setResult] = React.useState('');
+      const {updateHistory} = React.useContext(CalculatorContext);
 
       function handleInputClick(input) {
 
@@ -208,6 +225,7 @@
           const operationResult = eval(operation.replace(/,/g, '.'));
           const parseResult = operationResult.toString()?.replace(/\./g, ',')
           setResult(parseResult);
+          updateHistory(operation, parseResult);
           return;
         }
 
@@ -261,6 +279,7 @@
     }
 
     function OperationHistory() {
+      const {history} = React.useContext(CalculatorContext);
       return(
         <Card className="w-full py-10 px-8">
 
@@ -271,12 +290,20 @@
           >
             Histórico de Operações
           </Text>
-
-          <ul className="flex flex-col gap-3">
-            <Text as="li">1 + 1 = 2</Text>
-            <Text as="li">2 + 3 + 1 = 6</Text>
-            <Text as="li">2 + 3 = 5</Text>
-          </ul>
+          {history.length > 0 ? 
+            (
+              <ul className="flex flex-col gap-3">
+              {history.map((value, index) => 
+                <Text key={`item-${index}`} as="li">
+                  {value}  
+                </Text>
+              )}
+              
+              </ul>
+            ) : (
+              <Text as="p" variant="muted">Nenhuma operação recente.</Text>
+            )
+          }
         </Card>
       )
 
@@ -294,9 +321,10 @@
           items-center sm: items-stretch
           gap-2
         `}>
-          
-          <Calculator />
-          <OperationHistory />
+          <CalculatorProvider>
+            <Calculator />
+            <OperationHistory />
+          </CalculatorProvider>
         </main>
       )
     }
