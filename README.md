@@ -1,25 +1,41 @@
-# 📂 My Dev Journey - Full Stack Projects
+# 📂 My Dev Journey - Full Stack Monorepo
 
-Este repositório contém meus estudos e projetos de desenvolvimento web.
-
-## 📁 Estrutura do Repositório
-
-* **`smart-dev-notes`**: Gerenciador de notas Full Stack com Next.js, Express e Framer Motion. (CRUD)
-* **`my-todo`**: Criação de listas de tarefa com TypeScript, vite, Tailwind CSS.
-* **`react-rocketseat`**: Estudos de hooks customizados (useCalculator).
+Bem-vindo ao meu repositório de estudos e projetos! Aqui organizo minha evolução como desenvolvedor Full Stack, desde os conceitos básicos até aplicações complexas.
 
 ---
 
-## 🚀 Destaque: Smart Dev Notes V2.0
+## 🚀 Projeto em Destaque: Smart Dev Notes V2.0
 
-O projeto mais completo, localizado na pasta `/smart-dev-notes`.
+O **Smart Dev Notes** é um gerenciador de notas profissional, com foco em performance e experiência do usuário.
 
-### 🛠️ Tech Stack
-* **Frontend**: Next.js 15, Tailwind CSS, Framer Motion.
-* **Backend**: Node.js & Express.
+* **Onde está:** `./smart-dev-notes`
+* **Tech Stack:** Next.js 15, Tailwind CSS, Framer Motion, Node.js & Express.
+* **Destaques:** Animações fluidas de layout, sistema de prioridades colorido e persistência de dados em tempo real.
 
-### 🎮 Como rodar o Smart Dev Notes:
-1. Navegue até a pasta: `cd smart-dev-notes`
+---
+
+## 📁 Estrutura do Repositório
+
+| Pasta | Descrição | Status |
+| :--- | :--- | :--- |
+| `smart-dev-notes` | CRUD Full Stack completo com animações Premium. | ✅ Concluído |
+| `dev-notes-frontend` | Versão inicial focada na interface de usuário. | 🛠️ Estudo |
+| `my-todo` | Integração simples de Frontend e Backend. | 🛠️ Estudo |
+| `react-rocketseat` | Exercícios e hooks customizados (useCalculator). | 🛠️ Estudo |
+
+---
+
+## 🛠️ Como rodar os projetos
+
+Como este é um monorepo, cada projeto possui suas próprias dependências. Para rodar o projeto principal:
+
+1. Acesse a pasta: `cd smart-dev-notes`
 2. Instale as dependências: `npm install`
 3. Inicie o servidor: `node server.ts`
 4. Em outro terminal, inicie o app: `npm run dev`
+
+---
+
+## 👨‍💻 Contato
+
+* **GitHub:** [yCuba](https://github.com/yCuba)
