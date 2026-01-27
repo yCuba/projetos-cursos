@@ -1,0 +1,20 @@
+# Dependências (O que deixa o Git pesado)
+node_modules/
+**/node_modules/
+
+# Next.js e Builds
+.next/
+**/.next/
+out/
+dist/
+build/
+
+# Arquivos Binários (O que trava o seu push de 100MB)
+*.node
+*.exe
+*.dll
+
+# Logs e arquivos de sistema
+*.log
+.DS_Store
+.env*
