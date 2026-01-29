@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 // PARTE 2: A Função de Busca (Exportada para o App.tsx usar)
-export const getGames = async () => {
+export const getGames = async (search: string = '') => {
   // O 'async' avisa que essa função pode demorar um pouco (esperando a internet).
   try {
     const response = await api.get('/games', {
@@ -16,6 +16,7 @@ export const getGames = async () => {
         // Buscamos a chave que você salvou no .env.local
         key: import.meta.env.VITE_RAWG_API_KEY, 
         page_size: 12, // Pedimos apenas 12 jogos para não travar
+        search: search,
       },
     });
 
