@@ -9,14 +9,15 @@ interface Game {
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-  async function loadGames() {
-    const data = await getGames(); // Chama o serviço que criamos
+  async function loadGames(term: string) {
+    const data = await getGames(term); // Chama o serviço que criamos
     setGames(data); // Guarda os jogos na nossa "gaveta"
   }
-    loadGames();
-  }, []);
+    loadGames(search);
+  }, [search]);
 
 
   return (
@@ -31,6 +32,15 @@ function App() {
       </header>
 
       <main>
+        <div className="mb-8">
+          <input
+            type="text"
+            placeholder="Buscar jogos..."
+            className="w-full p-3 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-purple-500 outline-none transition-all"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {games.length > 0 ? (
             // PARTE A: Se tiver jogos, mostra o MAP
@@ -49,6 +59,9 @@ function App() {
       </div>
       </main>
 
+      
+
+      
       
 
     </div>
