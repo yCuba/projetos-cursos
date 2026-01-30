@@ -11,20 +11,14 @@ function App() {
   const [games, setGames] = useState<Game[]>([]);
   const [search, setSearch] = useState("");
 
-  async function loadGames(term: string) {
-    const data = await getGames(term);
-    setGames(data);
-  }
-
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      loadGames(search);
-    }, 600);
-
-    return () => clearTimeout(delayDebounceFn);
+  async function loadGames(term: string) {
+    const data = await getGames(term); // Chama o serviço que criamos
+    setGames(data); // Guarda os jogos na nossa "gaveta"
+  }
+    loadGames(search);
   }, [search]);
 
-  
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white p-8">
