@@ -27,3 +27,13 @@ export const getGames = async (search: string = '') => {
     return []; // Se der erro, retornamos uma lista vazia para o App não quebrar
   }
 };
+
+export const getGameDetails = async (id: string | undefined) => {
+  if (!id) return null;
+
+  const response = await fetch(
+    `https://api.rawg.io/api/games/${id}?key=${import.meta.env.VITE_RAWG_API_KEY}`
+  );
+  const data = await response.json();
+  return data;
+}
