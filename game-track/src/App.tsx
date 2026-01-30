@@ -6,6 +6,8 @@ interface Game {
   id: number;
   name: string;
   background_image: string;
+  rating: number;
+  released: string;
 }
 
 function App() {
@@ -61,9 +63,29 @@ function App() {
           {games.length > 0 ? (
             // PARTE A: Se tiver jogos, mostra o MAP
             games.map((game) => (
-              <div key={game.id} className="bg-gray-800 p-4 rounded-lg">
-                <img src={game.background_image} className="rounded mb-2" />
-                <h3 className="text-white font-bold">{game.name}</h3>
+              <div key={game.id} className="bg-zinc-900 rounded-xl overflow-hidden hover:scale-[1.02] transition-transform group">
+                <img 
+                  src={game.background_image} 
+                  className="rounded mb-2 w-full h-48 object-cover" 
+                />
+
+                <div className="p-4"> 
+                  <h2 className="text-white font-bold">{game.name}</h2>
+                  
+                  <div>
+                    <span
+                      className="flex items-center gap-1 text-yellow-500 font-medium"
+                    >
+                      ⭐ {game.rating > 0 ? game.rating.toFixed(1) : "N/A"}
+                    </span>
+                    <span
+                      className="text-zinc-500"
+                    >
+                      {game.released ? new Date(game.released).getFullYear() : "TBA"}
+                    </span>
+                  </div>
+                </div>
+                
               </div>
           ))
   ) : (
