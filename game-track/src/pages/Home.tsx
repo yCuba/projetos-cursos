@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { getGames } from "../service/api";
-import { Search } from "lucide-react";
+import { Library, Search } from "lucide-react";
 import { GameCard } from "../components/GameCard";
+import { Link } from "react-router-dom";
 
 interface Game {
   id: number;
@@ -13,7 +14,17 @@ interface Game {
 
 function App() {
   const [games, setGames] = useState<Game[]>([]);
-  const [search, setSearch] = useState("");
+  
+  const [search, setSearch] = useState(() => {
+    const buscaSalva = localStorage.getItem('ultima_busca');
+    return buscaSalva || '';
+});
+
+  useEffect(() => {
+    if (search) {
+      localStorage.setItem('ultima_busca', search);
+    }
+  }, [search]);
 
   async function loadGames(term: string) {
     const data = await getGames(term);
@@ -40,9 +51,15 @@ function App() {
         <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
           Games
         </h1>
-        <div className="bg-gray-800 px-4 py-2 rounded-full text-sm font-medium">
-          Minha Coleção
-        </div>
+        <Link 
+          to="/favorites"
+        
+        >
+          <button className="flex items-center gap-2 bg-gray-800 px-4 py-2 rounded-full text-sm font-medium">
+            <Library size={18} />
+            Minha Coleção
+          </button>
+        </Link> 
       </header>
 
       <main>
