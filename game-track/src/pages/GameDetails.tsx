@@ -1,6 +1,6 @@
 import {ArrowLeft, Calendar, Star} from "lucide-react";
 import {useEffect, useState} from "react";
-import {useParams, Link} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import { getGameDetails } from "../service/api";
 
 interface GameDetails {
@@ -13,8 +13,10 @@ interface GameDetails {
 }
 
 export default function GameDetails( ) {
+    const navigate = useNavigate();
     const {id} = useParams();
     const [game, setGame] = useState<GameDetails | null>(null);
+    
 
     useEffect(() => {
         async function loadData() {
@@ -35,13 +37,13 @@ export default function GameDetails( ) {
         
         {/* CABEÇALHO: Botão de Voltar */}
         <header className="mb-8">
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-2 text-zinc-400 hover:text-purple-500 transition-colors group"
+          <button 
+            onClick={() => navigate(-1)}
+            className="inline-flex items-center gap-2 text-zinc-400 hover:text-purple-500 transition-colors group bg-transparent border-none cursor-pointer"
           >
             <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
             <span className="font-medium">Voltar para a biblioteca</span>
-          </Link>
+          </button>
         </header>
 
         {/* CONTEÚDO PRINCIPAL: Grid de Detalhes */}
