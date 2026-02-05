@@ -48,20 +48,37 @@ function agendarSessao(novaSessao: Agendamento): string {
   const novoInicio = novaSessao.inicio.getTime();
   const novoFim = novoInicio + (novaSessao.duracaoMinutos * 60000);
 
-  const conflito = agendaAtual.find(existente => {
-
-    const exInicio = new Date(existente.inicio).getTime();
-    const exFim = exInicio + (existente.duracaoMinutos * 60000);
-    return (novoInicio < exFim && novoFim > exInicio);
+  const temConflito = agendaAtual.some(sessao => {
+        const sInicio = new Date(sessao.inicio).getTime();
+        const sFim = sInicio + (sessao.duracaoMinutos * 60000);
+        return (novoInicio < sFim && novoFim > sInicio);
 
   });
 
-    if (conflito) return `❌ ERRO: Conflito com ${conflito.cliente}`;
+    if (temConflito) 
+        return (
+            `❌ ERRO: Conflito com`
+        )
 
+    
+        
     agendaAtual.push(novaSessao);
     return `✅ SUCESSO: Agendamento salvo no arquivo!`;
 
    
+}
+
+function cancelarSessao(id: number): string {
+    const agendaAtual = lerAgenda();
+
+    const agendaFiltrada = agendaAtual.filter(sessao => sessao.id !== id);
+
+    if (agendaFiltrada.length === agendaAtual.length) {
+        return `❌ ERRO: Agendamento com ID ${id} não encontrado.`
+    }
+
+    salvarAgenda(agendaFiltrada);
+    return `✅ SUCESSO: Agendamento ${id} foi cancelado!`;
 }
 
 
@@ -79,4 +96,10 @@ const resultado = agendarSessao(novaReserva);
 console.log(resultado);
 
 console.log("\n📋 Agenda Atualizada:");
+console.table(lerAgenda());
+
+console.log("\n--- Teste de Cancelamento ---")
+console.log(cancelarSessao(1));
+
+console.log("\n📋 Agenda após cancelamento:");
 console.table(lerAgenda());
