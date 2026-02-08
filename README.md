@@ -22,6 +22,8 @@ O **Smart Dev Notes** é um gerenciador de notas profissional, com foco em perfo
 | `dev-notes-frontend` | Versão inicial focada na interface de usuário. | 🛠️ Estudo |
 | `my-todo` | Integração simples de Frontend e Backend. | 🛠️ Estudo |
 | `react-rocketseat` | Exercícios e hooks customizados (useCalculator). | 🛠️ Estudo |
+| `game-track` | Biblioteca de jogos integrada com API externa e busca dinâmica. | ✅ Concluído |
+| `sentinel-scheduler` | Sistema de agendamento com validação de conflitos e rotas SPA. | ✅ Concluído |
 
 ---
 
