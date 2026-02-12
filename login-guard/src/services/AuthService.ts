@@ -13,4 +13,14 @@ export class AuthService {
     async comparePassword(password: string, hash:string): Promise<boolean> {
         return await bcrypt.compare(password, hash);
     }
+
+    async login(passwordReceived: string, passwordStored: string): Promise<boolean>{
+        const isMatch = await bcrypt.compare(passwordReceived, passwordStored);
+
+        return isMatch;
+    }
+
+    async comparePasswords(password: string, hash: string): Promise<boolean>{
+        return await bcrypt.compare(password, hash);
+    }
 }
