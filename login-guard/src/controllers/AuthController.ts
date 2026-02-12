@@ -1,9 +1,11 @@
 import {Request, Response} from 'express';
 import { AuthService } from '../services/AuthService';
 
-const authService = new AuthService()
+
 
 export class AuthController {
+    
+    authService = new AuthService()
 
     async register(req: Request, res: Response) {
         try {
@@ -13,7 +15,7 @@ export class AuthController {
                 return res.status(400).json({ error: "Campos obrigatórios ausentes."});
             }
 
-            const hashedPassword = await authService.hashPassword(password);
+            const hashedPassword = await this.authService.hashPassword(password);
 
 
             return res.status(201).json({
@@ -29,6 +31,21 @@ export class AuthController {
         }
     } 
 
+    async login(req: Request, res: Response) {
+        const { email, password } = req.body;
 
+        const userPasswordHash = "$2b$10$wKnN7Hok8aregL5P8zcPB.rDDoDADHwlYpaFNVKAMC/W4wXDFkaW2";
+
+        const isPasswordValid = await this.authService.comparePassword(password, userPasswordHash);
+
+        if (!isPasswordValid) {
+            return res.status(401).json({ error: "E-mail ou senha inválidos "});
+        }
+
+        return res.json({
+            message: "Login realizado com sucesso!",
+            token: "simulacao-de-jwt-token"
+        });
+    }
 
 }
