@@ -36,7 +36,7 @@ export class AuthController {
 
         const userPasswordHash = "$2b$10$wKnN7Hok8aregL5P8zcPB.rDDoDADHwlYpaFNVKAMC/W4wXDFkaW2";
 
-        const isPasswordValid = await this.authService.comparePassword(password, userPasswordHash);
+        const isPasswordValid = await this.authService.validadeLogin(password, userPasswordHash);
 
         if (!isPasswordValid) {
             return res.status(401).json({ error: "E-mail ou senha inválidos "});
@@ -47,5 +47,7 @@ export class AuthController {
             token: "simulacao-de-jwt-token"
         });
     }
+
+
 
 }
