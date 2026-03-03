@@ -7,43 +7,61 @@ import Text from "../components/text";
 import TrashIcon from "../assets/icons/trash.svg?react";
 import PencilIcon from "../assets/icons/pencil.svg?react";
 import XIcon from "../assets/icons/x.svg?react";
-import CkeckIcon from "../assets/icons/Check.svg?react";
+import CheckIcon from "../assets/icons/check.svg?react";
 import InputText from "../components/input-text";
+import { type Task, TaskState } from "../models/task";
+import { cx } from "class-variance-authority";
 
-export default function TaskItem() {
+interface TaskItemProps {
+  task: Task;
+}
 
-    const [isEditing, setIsEditing] = React.useState(false);
-    
-    function handleEditTask() {
-        setIsEditing(true);
-    }
+export default function TaskItem({ task }: TaskItemProps) {
+  const [isEditing, setIsEditing] = React.useState(
+    task?.state === TaskState.Creating
+  );
 
-    function handleExitEditTask() {
-        setIsEditing(false);
-    }
+  function handleEditTask() {
+    setIsEditing(true);
+  }
 
-    return (
-        
-        <Card size="md" className="flex items-center gap-4">
-            {!isEditing ? (
-                <>
-                    <InputCheckbox />                
-                    <Text className="flex-1">🛒 Fazer compras da semana</Text>
-                    <div className="flex gap-1">
-                        <ButtonIcon icon={TrashIcon} variant="tertiary"  />
-                        <ButtonIcon icon={PencilIcon} variant="tertiary" onClick={handleEditTask} />
-                    </div>
-                </>
-            ) : (
-                    <>
-                        <InputText className="flex-1" />
-                        <div className="flex gap-1">
-                            <ButtonIcon icon={XIcon} variant="secondary" onClick={handleExitEditTask} />
-                            <ButtonIcon icon={CkeckIcon} variant="primary" />
+  function handleExitEditTask() {
+    setIsEditing(false);
+  }
 
-                        </div>
-                    </>
-            )}
-        </Card>
-    );
+  return (
+    <Card size="md" className="flex items-center gap-4">
+      {!isEditing ? (
+        <>
+          <InputCheckbox
+            value={task.concluded?.toString()}
+            checked={task.concluded}
+          />
+          <Text className={cx("flex-1", { "line-through": task?.concluded })}>
+            {task?.title}
+          </Text>
+          <div className="flex gap-1">
+            <ButtonIcon icon={TrashIcon} variant="tertiary" />
+            <ButtonIcon
+              icon={PencilIcon}
+              variant="tertiary"
+              onClick={handleEditTask}
+            />
+          </div>
+        </>
+      ) : (
+        <>
+          <InputText className="flex-1" />
+          <div className="flex gap-1">
+            <ButtonIcon
+              icon={XIcon}
+              variant="secondary"
+              onClick={handleExitEditTask}
+            />
+            <ButtonIcon icon={CheckIcon} variant="primary" />
+          </div>
+        </>
+      )}
+    </Card>
+  );
 }

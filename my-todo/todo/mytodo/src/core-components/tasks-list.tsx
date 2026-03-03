@@ -1,26 +1,31 @@
 import Button from "../components/button";
-import PlusIcon from "../assets/icons/Plus.svg?react";
+
+import PlusIcon from "../assets/icons/plus.svg?react";
 import TaskItem from "./task-item";
 import useTasks from "../hooks/use-tasks";
+import useTask from "../hooks/use-task";
 
 export default function TasksList() {
+  const { tasks } = useTasks();
+  const { prepareTask } = useTask();
 
-    const { tasks } = useTasks();
+  function handleNewTask() {
+    prepareTask();
+  }
 
-    console.log(tasks);
+  return (
+    <>
+      <section>
+        <Button icon={PlusIcon} className="w-full" onClick={handleNewTask}>
+          Nova tarefa
+        </Button>
+      </section>
 
-    return (
-        <>
-            <section>
-                <Button icon={PlusIcon} className="w-full">Nova tarefa</Button>
-            </section>
-            <section className="space-y-2">
-                <TaskItem />
-                <TaskItem />
-                <TaskItem />
-                <TaskItem />
-                
-            </section>
-        </>
-    )
+      <section className="space-y-2">
+        {tasks.map((task) => (
+          <TaskItem key={task.id} task={task} />
+        ))}
+      </section>
+    </>
+  );
 }
