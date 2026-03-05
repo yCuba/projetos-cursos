@@ -11,6 +11,7 @@ import CheckIcon from "../assets/icons/check.svg?react";
 import InputText from "../components/input-text";
 import { type Task, TaskState } from "../models/task";
 import { cx } from "class-variance-authority";
+import useTask from "../hooks/use-task";
 
 interface TaskItemProps {
   task: Task;
@@ -18,27 +19,30 @@ interface TaskItemProps {
 
 export default function TaskItem({ task }: TaskItemProps) {
   const [isEditing, setIsEditing] = React.useState(
-    task?.state === TaskState.Creating,
+    task?.state === TaskState.Creating
   );
 
-  const [taskTitle, setTaskTitle] = React.useState("");
+  const [taskTitle, setTaskTitle] = React.useState(task.title || "");
+  const { updateTask } = useTask();
+
 
   function handleEditTask() {
     setIsEditing(true);
-  }
-
-  function handleExitEditTask() {
-    setIsEditing(false);
   }
 
   function handleChangeTaskTitle(e: React.ChangeEvent<HTMLInputElement>) {
     setTaskTitle(e.target.value || "");
   }
 
+  function handleExitEditTask() {
+    setIsEditing(false);
+  }
+
+  
+
   function handleSaveTask(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(task.id, taskTitle);
-
+    updateTask(task.id, {title: taskTitle});
     setIsEditing(false);
   }
 
@@ -67,7 +71,8 @@ export default function TaskItem({ task }: TaskItemProps) {
         ) : (
           <form onSubmit={handleSaveTask} className="flex items-center gap-4">
             <InputText
-              type="text"
+              value={taskTitle}
+        
               className="flex-1"
               onChange={handleChangeTaskTitle}
               required
