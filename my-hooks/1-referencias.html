@@ -40,12 +40,80 @@
         );
       }
 
+      function ScrollTracker() {
+        const containerRef = React.useRef(null);
+        const [scrollInfo, setScrollInfo] = React.useState({
+          scrollTop: 0,
+          scrollHeight: 0,
+          clientHeight: 0,
+        })
+        const [scrollPercentage, setScrollPercentage] = React.useState(0);
+
+        function handleContainerScroll() {
+          if (!containerRef.current) {
+            return;
+          }
+
+          const { scrollTop, scrollHeight, clientHeight} = 
+            containerRef.current;
+
+
+          setScrollInfo({
+            scrollTop,
+            scrollHeight,
+            clientHeight,
+          });
+
+          const maxScroll = scrollHeight - clientHeight;
+          const percentage = Math.round((scrollTop / maxScroll) * 100);
+
+          setScrollPercentage(percentage);
+        }
+
+        return (
+          <div className="space-y-4">
+              <div 
+                ref={containerRef}
+                onScroll={handleContainerScroll}
+                className={`
+                  border borders-solid border-blue-500 p-4 
+                  h-60 overflow-y-auto
+                `}>
+                <div className="space-y-4">
+                  {Array.from({length: 20}).map((_, index) => (
+                    <p>
+                      Item {index + 1}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              <ul className="space-y-2 list-disc pl-5">
+                <li>
+                  Progresso do Scroll: {scrollPercentage}%
+                </li>
+                <li>
+                  Onde está o scroll (scrollTop): {scrollInfo.scrollTop}
+                </li>
+                 <li>
+                  Tamanho scroll (scrollHeight): {scrollInfo.scrollHeight}
+                </li>
+                <li>
+                  Tamanho container (clientHeight): {scrollInfo.clientHeight}
+                </li>  
+              </ul>
+          </div>
+        )
+      }
 
       function App() {
         return (
           <main className="p-3 space-y-6">
             <InputFocus />
             
+            <hr/>
+
+            <ScrollTracker />
           </main>
         );
       }
