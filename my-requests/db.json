@@ -1,6 +1,21 @@
 {
   "users": [
-    {"id": "Bana", "name": "Banana"},
-    {"id": "Laran", "name": "Laranja"}
-  ]
+    {
+      "id": "Bana",
+      "name": "Banana"
+    },
+    {
+      "id": "Laran",
+      "name": "Laranja"
+    },
+    {
+      "id": "Car",
+      "name": "Carla"
+    },
+    {
+      "id": "Sh",
+      "name": "Sergio"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
