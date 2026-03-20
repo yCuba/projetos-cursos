@@ -7,7 +7,7 @@ export default function UserInfo() {
 
 
     React.useEffect(() =>{
-        getUser("Laran");
+        getUser("Sh");
     }, [getUser]);
 
     if (userRequestStatus === 'loading') {
