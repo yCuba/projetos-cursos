@@ -27,14 +27,7 @@ O **Smart Dev Notes** é um gerenciador de notas profissional, com foco em perfo
 
 ---
 
-## 🛠️ Como rodar os projetos
 
-Como este é um monorepo, cada projeto possui suas próprias dependências. Para rodar o projeto principal:
-
-1. Acesse a pasta: `cd smart-dev-notes`
-2. Instale as dependências: `npm install`
-3. Inicie o servidor: `node server.ts`
-4. Em outro terminal, inicie o app: `npm run dev`
 
 ---
 
